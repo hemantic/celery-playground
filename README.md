@@ -28,3 +28,5 @@ You can then watch and troubleshoot your tasks in Flower (`http://localhost:5555
 * In order to use `chord` primitive, Celery result backend is required
 * `chord` primitive generates a `celery.chord_unlock` task every second and it can be confusing at first. These tasks
   are generated even if `chord` primitive is not invoked directly
+* It seems like `chord` primitive can't be converted to signature and must always be at the end of the chain (or be
+  invoked as a separate task). I was unable to run any task after `chord` in any way (including task links).

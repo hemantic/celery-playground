@@ -23,6 +23,9 @@ to start example tasks chain. If you want to run another task or reassamble task
 
 You can then watch and troubleshoot your tasks in Flower (`http://localhost:5555`) – it is also shipped by Docker.
 
+Generally every task receives a list with names of previousely executed tasks, adds its name to this list and returns
+updated list as a result. So you can track task execution sequency in results fields of tasks in Flower.
+
 ## Notes
 
 * In order to use `chord` primitive, Celery result backend is required

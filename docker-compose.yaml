@@ -1,0 +1,53 @@
+version: '3.6'
+
+services:
+  worker:
+    build: .
+    restart: always
+    command: celery --app=tasks.celery worker --loglevel=info
+    volumes:
+      - ./src:/srv:delegated
+    environment:
+      - C_FORCE_ROOT=on
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=db+postgresql://postgres:postgres@database:5432/postgres
+    links:
+      - redis
+      - database
+    depends_on:
+      - redis
+      - database
+
+  flower:
+    build: .
+    restart: always
+    command: celery --app=tasks.celery flower --port=5555
+    volumes:
+      - ./src:/src:delegated
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=db+postgresql://postgres:postgres@database:5432/postgres
+    links:
+      - redis
+    ports:
+      - 5555:5555
+
+
+  redis:
+    image: redis:7-alpine
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+      - DB_PORT=5432
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    ports:
+      - 5432:5432
+
+volumes:
+  database-data:

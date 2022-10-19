@@ -1,0 +1,5 @@
+celery==5.2.7
+flower==1.2.0
+redis==4.3.4
+psycopg2-binary==2.9.4
+sqlalchemy==1.4.42

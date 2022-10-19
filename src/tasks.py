@@ -10,7 +10,7 @@ celery = Celery(__name__, backend=os.getenv("DATABASE_URL"), broker=os.getenv("R
 
 
 @celery.task()
-def single_first(param: list):
+def single_first(param: list) -> list:
     """
     Example task to be invoked in chain.
     """
@@ -23,7 +23,7 @@ def single_first(param: list):
 
 
 @celery.task()
-def single_second(param: list):
+def single_second(param: list) -> list:
     """
     Example task to be invoked in chain.
     """
@@ -36,7 +36,7 @@ def single_second(param: list):
 
 
 @celery.task()
-def single_third(param: list):
+def single_third(param: list) -> list:
     """
     Example task to be invoked in chain.
     """
@@ -49,7 +49,7 @@ def single_third(param: list):
 
 
 @celery.task()
-def parallel_first(param: list):
+def parallel_first(param: list) -> list:
     """
     Example task to be invoked in group or chord.
     """
@@ -62,7 +62,7 @@ def parallel_first(param: list):
 
 
 @celery.task()
-def parallel_second(param: list):
+def parallel_second(param: list) -> list:
     """
     Example task to be invoked in group or chord.
     """
@@ -75,7 +75,7 @@ def parallel_second(param: list):
 
 
 @celery.task()
-def parallel_third(param: list):
+def parallel_third(param: list) -> list:
     """
     Example task to be invoked in group or chord.
     """
@@ -88,7 +88,7 @@ def parallel_third(param: list):
 
 
 @celery.task()
-def sum_all(tasks):
+def sum_all(tasks: list) -> int:
     """
     Reduce task to be invoked as a callback after group or chord. Gets the number of previously executed tasks.
     """
@@ -104,7 +104,7 @@ def wrapper(result):
 
 
 @celery.task()
-def prepared_simple_chain(param):
+def prepared_simple_chain(param: list):
     """
     Simple chain. Needs to be converted to signature outside.
     """
@@ -116,7 +116,7 @@ def prepared_simple_chain(param):
 
 
 @celery.task()
-def prepared_chain_with_group_in_the_end(param):
+def prepared_chain_with_group_in_the_end(param: list):
     """
     Chain with group in the end. Should be automatically converted to chord according to Celery docs. Seems like can't
     be converted to signature.
@@ -140,7 +140,7 @@ def prepared_group(param):
     )
 
 
-def prepared_task_list(param):
+def prepared_task_list(param: list) -> list:
     """
     An example list of 3 separate parallel tasks, can be used in group or chord.
     """
@@ -152,7 +152,7 @@ def prepared_task_list(param):
 
 
 @celery.task()
-def prepared_chord(param):
+def prepared_chord(param: list):
     """
     Fully prepared chord with 3 parallel tasks and a callback.
     """
@@ -164,7 +164,7 @@ def prepared_chord(param):
 
 
 @celery.task()
-def prepared_chord_with_group_as_body(param):
+def prepared_chord_with_group_as_body(param: list):
     """
     Chord prepared another way.
     """
@@ -172,7 +172,7 @@ def prepared_chord_with_group_as_body(param):
 
 
 @celery.task()
-def chain_list_and_chord(param):
+def chain_list_and_chord(param: list):
     """
     All the magic starts here. Russkoe pole experimentov.
     """

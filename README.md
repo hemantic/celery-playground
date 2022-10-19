@@ -1,6 +1,6 @@
 # Celery tasks and primitives playground
 
-This repo is a playground for testing different configurations of Celery tasks and Celery primitives (groups, chains,
+This repo is a playground for testing different configurations of [Celery](https://docs.celeryq.dev/) tasks and [Celery primitives](https://docs.celeryq.dev/en/stable/userguide/canvas.html) (groups, chains,
 chords, etc). 
 
 ## What's inside
@@ -28,7 +28,7 @@ updated list as a result. So you can track task execution sequency in results fi
 
 ## Notes
 
-* In order to use `chord` primitive, Celery result backend is required
+* In order to use [chord](https://docs.celeryq.dev/en/stable/userguide/canvas.html#chords) primitive, Celery result backend is required
 * `chord` primitive generates a `celery.chord_unlock` task every second and it can be confusing at first. These tasks
   are generated even if `chord` primitive is not invoked directly
 * It seems like `chord` primitive can't be converted to signature and must always be at the end of the chain (or be

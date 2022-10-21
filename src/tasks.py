@@ -180,11 +180,19 @@ def chain_list_and_chord(param: list):
         single_first.s(param),
         single_second.s(),
         single_third.s(),
-        # prepared_group.s().link(sum_all.s()),
-        prepared_chord.s(),
+
+        group([
+            parallel_first.s(),
+            parallel_second.s(),
+            parallel_third.s(),
+        ]),
+        sum_all.s(),
+        wrapper.s(),
+
+        # prepared_chord.s(),
         # chord([
         #     parallel_first.s(),
         #     parallel_second.s(),
         #     parallel_third.s(),
-        # ])(sum_all.s()).s()
+        # ])(sum_all.s()),
     )

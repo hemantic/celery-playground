@@ -180,7 +180,6 @@ def chain_list_and_chord(param: list):
         single_first.s(param),
         single_second.s(),
         single_third.s(),
-
         group([
             parallel_first.s(),
             parallel_second.s(),

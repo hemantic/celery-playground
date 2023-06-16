@@ -10,6 +10,32 @@ celery = Celery(__name__, backend=os.getenv("DATABASE_URL"), broker=os.getenv("R
 
 
 @celery.task()
+def chain_list_and_chord(param: list):
+    """
+    All the magic starts here. Russkoe pole experimentov.
+    """
+    return chain(
+        single_first.s(param),
+        single_second.s(),
+        single_third.s(),
+        group([
+            parallel_first.s(),
+            parallel_second.s(),
+            parallel_third.s(),
+        ]),
+        sum_all.s(),
+        wrapper.s(),
+
+        # prepared_chord.s(),
+        # chord([
+        #     parallel_first.s(),
+        #     parallel_second.s(),
+        #     parallel_third.s(),
+        # ])(sum_all.s()),
+    )
+
+
+@celery.task()
 def single_first(param: list) -> list:
     """
     Example task to be invoked in chain.
@@ -169,29 +195,3 @@ def prepared_chord_with_group_as_body(param: list):
     Chord prepared another way.
     """
     return chord(prepared_task_list(param))(sum_all.s())
-
-
-@celery.task()
-def chain_list_and_chord(param: list):
-    """
-    All the magic starts here. Russkoe pole experimentov.
-    """
-    return chain(
-        single_first.s(param),
-        single_second.s(),
-        single_third.s(),
-        group([
-            parallel_first.s(),
-            parallel_second.s(),
-            parallel_third.s(),
-        ]),
-        sum_all.s(),
-        wrapper.s(),
-
-        # prepared_chord.s(),
-        # chord([
-        #     parallel_first.s(),
-        #     parallel_second.s(),
-        #     parallel_third.s(),
-        # ])(sum_all.s()),
-    )
